@@ -50,6 +50,12 @@ header.wrap{ padding:10px 24px 0; }
 .nav a:hover{ color: var(--ink); text-decoration:underline; }
 .nav a.current{ color: var(--ink); text-decoration:underline; }
 
+@media (max-width:640px){
+  .nav{ flex-direction:column; align-items:flex-start; gap:8px; }
+  .nav .name{ margin-left:0; margin-right:0; font-size:16px; letter-spacing:0.5px; white-space:nowrap; }
+  .nav ul{ gap:16px; flex-wrap:wrap; }
+}
+
 /* ---------- headings ---------- */
 h1{ font-size:18px; font-weight:normal; line-height:1.5; max-width:600px; margin-bottom:16px; }
 h2{
