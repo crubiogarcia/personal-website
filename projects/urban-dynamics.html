@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carmen Rubio Garcia — Urban Dynamics</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<header class="wrap">
+  <div class="nav">
+    <a class="name" href="../index.html">Carmen Rubio Garcia</a>
+    <ul>
+      <li><a href="../index.html">Projects</a></li>
+      <li><a class="current" href="../research.html">Research</a></li>
+      <li><a href="../about.html">About</a></li>
+    </ul>
+  </div>
+</header>
+
+<section class="page-title wrap">
+  <p class="back-link"><a href="../research.html">&larr; All research</a></p>
+  <h1>Urban Dynamics</h1>
+  <p class="taxonomy">MACHINE LEARNING &middot; DATA ANALYSIS &middot; URBAN SYSTEMS</p>
+  <p class="project-subtitle">Data Analysis and Machine Learning for Understanding Contemporary Cities</p>
+  <p class="taxonomy">Python &middot; Pandas &middot; Scikit-learn &middot; Matplotlib &middot; GIS</p>
+</section>
+
+<section class="section wrap project-page">
+  <div class="research-item" id="urban-pattern-prediction">
+
+    <!-- OVERVIEW -->
+    <div class="fig-block" style="margin-top:0; padding-top:0;">
+      <div class="fig-kicker">Overview</div>
+
+      <p>
+        This research explores how data and machine learning can be used to investigate patterns within
+        contemporary cities. Using Airbnb data from Berlin, Madrid and Chicago, the project combines spatial
+        analysis with supervised learning to examine relationships between listing characteristics, prices and
+        location.
+      </p>
+
+      <p>
+        Rather than using machine learning purely for prediction, the project treats models as analytical
+        instruments: their predictions, limitations and spatial patterns become ways of investigating the urban
+        systems behind the data.
+      </p>
+    </div>
+
+
+    <!-- 01 — DATA PREPARATION -->
+    <div class="fig-block">
+      <div class="fig-kicker">01 &mdash; Data preparation</div>
+      <h4 class="fig-title">From raw listings to a computational model</h4>
+
+      <p>
+        Airbnb data brings together very different kinds of information: property 
+        characteristics, prices, availability, reviews and accommodation types, as 
+        well as missing and categorical values.
+      </p>
+
+      <p>
+        Before modelling, the dataset is cleaned and transformed. Missing values are 
+        handled according to what each variable represents, categorical features such 
+        as <code>room_type</code> are converted using one-hot encoding, and logarithmic transformation 
+        is applied to strongly skewed distributions. The independent variables are then 
+        standardised using <code>StandardScaler</code> so that features with larger numerical ranges 
+        do not have a disproportionate influence on the model.
+      </p>
+
+      <div class="flow-diagram">
+        <div class="flow-step">
+          <div class="flow-step-title">Raw data</div>
+          <ul class="flow-step-list">
+            <li>Airbnb listings</li>
+            <li>Price</li>
+            <li>Bedrooms</li>
+            <li>Room type</li>
+            <li>Availability</li>
+            <li>Reviews</li>
+          </ul>
+        </div>
+
+        <div class="flow-arrow">&rarr;</div>
+
+        <div class="flow-step">
+          <div class="flow-step-title">Clean</div>
+          <ul class="flow-step-list">
+            <li>Missing values</li>
+            <li>Data filtering</li>
+          </ul>
+        </div>
+
+        <div class="flow-arrow">&rarr;</div>
+
+        <div class="flow-step">
+          <div class="flow-step-title">Transform</div>
+          <ul class="flow-step-list">
+            <li>Log transform</li>
+            <li>Redistribute skewed variables</li>
+          </ul>
+        </div>
+
+        <div class="flow-arrow">&rarr;</div>
+
+        <div class="flow-step">
+          <div class="flow-step-title">Encode</div>
+          <ul class="flow-step-list">
+            <li>Categorical &rarr; numerical</li>
+            <li><code>room_type</code></li>
+          </ul>
+        </div>
+
+        <div class="flow-arrow">&rarr;</div>
+
+        <div class="flow-step">
+          <div class="flow-step-title">Standardise</div>
+          <ul class="flow-step-list">
+            <li><code>StandardScaler</code></li>
+            <li>Comparable feature ranges</li>
+          </ul>
+        </div>
+
+        <div class="flow-arrow">&rarr;</div>
+
+        <div class="flow-step flow-step-final">
+          <div class="flow-step-title">Model-ready data</div>
+          <ul class="flow-step-list">
+            <li>Processed predictors</li>
+            <li>+ target variable</li>
+          </ul>
+        </div>
+      </div>
+
+      <figure class="fig-compact">
+        <img
+          src="../images/ud-fig26-skewness.png"
+          alt="Fisher skewness coefficient before and after the logarithmic transformation">
+        <figcaption>
+          Fig. 26 &mdash; Fisher skewness coefficient before and after logarithmic transformation.
+        </figcaption>
+      </figure>
+
+      <p>
+        <strong>These transformations make very different characteristics of the city computationally
+          comparable.</strong> Property characteristics, demand indicators, reviews and accommodation types can
+          then be analysed together rather than as separate pieces of information.
+      </p>
+    </div>
+
+
+    <!-- 02 — PRICE PREDICTION -->
+    <div class="fig-block">
+      <div class="fig-kicker">02 &mdash; Price prediction</div>
+      <h4 class="fig-title">Can listing characteristics explain price?</h4>
+
+      <p>
+        A K-nearest neighbours regression model is trained to test whether the processed listing 
+        characteristics can predict nightly prices.
+      </p>
+
+      <p>
+        The dataset is split into 80% training and 20% testing data. Cross-validation is used to test 
+        different neighbourhood sizes rather than choosing<strong>k</strong> arbitrarily, with
+        <strong>k = 67</strong> giving the best result for the Berlin model.
+      </p>
+
+      <div class="tech-panel">
+        <div class="tech-panel-label">Method</div>
+
+        <div class="tech-group">
+          <div class="tech-row"><span class="tech-key">Model</span><span>KNN Regression</span></div>
+          <div class="tech-row"><span class="tech-key">Data split</span><span>80 / 20</span></div>
+          <div class="tech-row"><span class="tech-key">Optimisation</span><span>Cross-validation</span></div>
+          <div class="tech-row"><span class="tech-key">Neighbours</span><span>k = 67</span></div>
+        </div>
+
+        <div class="tech-group">
+          <div class="tech-row"><span class="tech-key">R&sup2;</span><span>0.548</span></div>
+          <div class="tech-row"><span class="tech-key">RMSE</span><span>0.433</span></div>
+        </div>
+      </div>
+
+      <figure class="fig-pair-match">
+        <img
+          src="../images/ud-fig40-knn-prediction.png"
+          alt="KNN actual versus predicted price scatter plot">
+        <figcaption>
+          Fig. 40 &mdash; Actual vs. predicted price after rescaling. R&sup2; = 0.548, RMSE = 0.433.
+        </figcaption>
+      </figure>
+
+      <p>
+        The model explains approximately <strong>55% of the observed variance</strong> in price. This 
+        suggests that listing characteristics capture a meaningful part of how prices vary, while leaving 
+        a substantial amount unexplained.
+      </p>
+    </div>
+
+
+    <!-- 03 — MODEL COMPARISON -->
+    <div class="fig-block">
+      <div class="fig-kicker">03 &mdash; Model comparison</div>
+      <h4 class="fig-title">Are these relationships linear?</h4>
+
+      <p>
+        To test whether a simpler mathematical relationship could describe the data just as well, 
+        the same processed dataset is used to train a linear regression model.
+      </p>
+
+      <div class="tech-panel">
+        <div class="tech-panel-label">Comparison</div>
+
+        <div class="tech-group">
+          <div class="tech-row">
+            <span class="tech-key">KNN</span>
+            <span>R&sup2; 0.548 &middot; RMSE 0.433</span>
+          </div>
+        </div>
+
+        <div class="tech-group">
+          <div class="tech-row">
+            <span class="tech-key">Linear regression</span>
+            <span>R&sup2; 0.531 &middot; RMSE 0.442</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="fig-pair">
+        <figure>
+          <img
+            src="../images/ud-fig40-knn-prediction.png"
+            alt="KNN actual versus predicted price scatter plot">
+          <figcaption>KNN &middot; R&sup2; 0.548</figcaption>
+        </figure>
+
+        <figure>
+          <img
+            src="../images/ud-fig46-linear-prediction.png"
+            alt="Linear regression actual versus predicted price scatter plot">
+          <figcaption>Linear regression &middot; R&sup2; 0.531</figcaption>
+        </figure>
+      </div>
+
+      <p>
+        Linear regression performs slightly worse than KNN, with a lower R&sup2; and higher prediction error.
+        The comparison suggests that simplifying the relationship to a linear one therefore does not improve the model.
+      </p>
+
+      <p>
+        More importantly, comparing the two approaches provides a way of testing how different mathematical
+        representations describethe relationship between listing characteristics and price.
+      </p>
+
+      <p>
+        When the same modelling approach is applied to Madrid and Chicago, the results remain relatively similar. 
+        Although the three cities are very different, the selected listing characteristics appear to contain a 
+        comparable amount of information about price.
+      </p>
+
+      <p class="predict-line">
+        COMPARABLE STATISTICAL RELATIONSHIPS &middot; DIFFERENT URBAN CONDITIONS
+      </p>
+    </div>
+
+
+    <!-- 04 — URBAN ANALYSIS -->
+    <div class="fig-block">
+      <div class="fig-kicker">04 &mdash; Urban analysis</div>
+      <h4 class="fig-title">What urban patterns emerge from the data?</h4>
+
+      <p>
+        The analysis then returns the data to its urban context. Price, demand, accommodation type and the distribution 
+        of Airbnb listings are mapped by district and compared with broader patterns of urban value and tourist activity.
+      </p>
+
+      <p>
+        <strong>
+          Across the three cities, short-term rental activity intersects with existing patterns of centrality, tourism 
+          and socioeconomic difference.
+        </strong>
+      </p>
+
+      <p>
+        Airbnb activity tends to concentrate around central and highly visited areas, but the pattern is different in each city. 
+        Price, demand and accommodation type also take on different spatial distributions depending on the wider urban context.
+      </p>
+
+
+      <!-- 04.1 PRICE AND URBAN VALUE -->
+      <div class="urban-subsection">
+        <div class="fig-kicker">04.1 &mdash; Price and urban value</div>
+
+        <figure class="fig-compact-lg">
+          <img
+            src="../images/ud-fig97-price-3cities_horizontal.png"
+            alt="Nightly Airbnb price by district in Berlin, Madrid and Chicago">
+          <figcaption>
+            Fig. 97 &mdash; Nightly price by district &mdash; Berlin, Madrid, Chicago.
+          </figcaption>
+        </figure>
+
+        <p>
+          Airbnb prices broadly reflect centre&ndash;periphery patterns of urban value, but not in exactly the same way in each city. 
+          Berlin and Chicago show higher-price areas around the centre, while Madrid has a more dispersed pattern.
+        </p>
+      </div>
+
+
+      <!-- 04.2 DEMAND  -->
+      <div class="urban-subsection">
+        <div class="fig-kicker">04.2 &mdash; Demand and urban change</div>
+
+        <figure class="fig-compact-lg">
+          <img
+            src="../images/ud-fig98-demand-3cities_horizontal.png"
+            alt="Availability and demand by district in Berlin, Madrid and Chicago">
+          <figcaption>
+            Fig. 98 &mdash; Availability / demand by district &mdash; Berlin, Madrid, Chicago.
+          </figcaption>
+        </figure>
+
+        <p>
+          High-demand areas tend to cluster around the centre rather than only within it. In Berlin and Chicago, some of these high-demand 
+          areas also overlap with areas identified as exposed to gentrification.
+        </p>
+      </div>
+
+
+      <!-- 04.3 ACCOMMODATION TYPE -->
+      <div class="urban-subsection">
+        <div class="fig-kicker">04.3 &mdash; Accommodation patterns</div>
+
+        <figure class="fig-compact-lg">
+          <img
+            src="../images/ud-fig99-roomtype-3cities_horizontal.png"
+            alt="Dominant Airbnb accommodation type by district in Berlin, Madrid and Chicago">
+          <figcaption>
+            Fig. 99 &mdash; Dominant accommodation type by district &mdash; Berlin, Madrid, Chicago.
+          </figcaption>
+        </figure>
+
+        <p>
+          Entire homes and apartments are the most common type of listing in all three cities, but their distribution varies. Berlin has a 
+          much stronger presence of private rooms, particularly in areas of higher demand, while Madrid and Chicago show different patterns between 
+          central and peripheral districts.
+        </p>
+      </div>
+
+
+      <!-- 04.4 TOURISM -->
+      <div class="urban-subsection">
+        <div class="fig-kicker">04.4 &mdash; Airbnb and tourism</div>
+
+        <figure class="fig-compact-lg">
+          <img
+            src="../images/ud-tourismflow-3cities_horizontal.png"
+            alt="Tourist activity in Berlin, Madrid and Chicago">
+          <figcaption>
+            Fig. 101 &mdash; Tourist activity &mdash; Berlin, Madrid, Chicago.
+          </figcaption>
+        </figure>
+
+        <p>
+          Tourist activity is concentrated in relatively small central areas in all three cities, while Airbnb listings spread further into surrounding 
+          districts. The geography of short-term rentals is closely connected to tourism, but is not limited to the traditional tourist centre.
+        </p>
+      </div>
+
+
+      <p>
+        <strong>
+          Short-term rentals do not form a separate geography of their own, they interact with existing patterns of value, tourism, centrality and urban change.
+        </strong>
+      </p>
+
+      <p>
+        Mapping the variables makes it possible to move from statistical relationships to urban ones. Similar relationships in the data can take very different 
+        spatial forms once placed back in the context of Berlin, Madrid and Chicago.
+      </p>
+    </div>
+
+
+    <!-- SYNTHESIS -->
+    <div class="fig-block synthesis">
+      <div class="fig-kicker">Synthesis</div>
+      <h4 class="fig-title">From prediction to urban interpretation</h4>
+
+      <p>
+        Urban Dynamics begins with a relatively simple question
+        <strong>can Airbnb prices be predicted from listing characteristics?</strong> 
+        but develops into a broader investigation of what computational models can reveal about cities.
+      </p>
+
+      <p>
+        The project moves between data and urban space: preparing the data, testing relationships through prediction, comparing different models, and finally 
+        mapping the variables back onto the cities they describe
+      </p>
+
+      <p class="predict-line">DATA &rarr; MODEL &rarr; EVALUATE &rarr; MAP &rarr; INTERPRET</p>
+
+      <p>
+        <strong>
+          Machine learning becomes not just a tool for prediction, but a way of asking questions about complex 
+          urban systems.
+        </strong>
+      </p>
+    </div>
+
+
+    <div class="project-links">
+      <a
+        href="https://raw.githubusercontent.com/crubiogarcia/Urban-Dynamics-Data-Analysis-Machine-Learning/main/BachelorThesis_Urban%20Dynamics.pdf"
+        target="_blank"
+        rel="noopener">Full thesis summary (EN)</a>
+      &middot;
+      <a
+        href="https://oa.upm.es/65083/"
+        target="_blank"
+        rel="noopener">Publication (ES)</a>
+    </div>
+
+  </div>
+</section>
+
+<footer class="wrap">
+  Carmen Rubio Garcia &middot; London, UK
+</footer>
+
+</body>
+</html>

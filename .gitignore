@@ -1,0 +1,46 @@
+# Working files and backups — kept on this laptop, not published
+SS/
+
+# Source / duplicate / unused images superseded by the versions actually
+# used on the live site (moved into SS/images/, listed here too in case
+# a copy still exists in images/ on this machine)
+images/Gemini_Generated_Image_je9ywnje9ywnje9y.jpeg
+images/Gemini_Generated_Image_msc3smsc3smsc3sm.jpeg
+images/Gemini_Generated_Image_msc3smsc3smsc3sm.psd
+images/Gemini_Generated_Image_pkt5wtpkt5wtpkt5.jpeg
+images/ifc-viewer-model-neutral_02.png
+images/ifc-viewer-model.png
+images/ifc-viewer-ui.png
+images/mps.png
+images/redesignmate_floors_added.jpg
+images/redesignmate_floors_added.psd
+images/redesignmate_viewer_diagram.png
+images/redesignmate_viewer.png
+images/thesis-berlin-listings.png
+images/thesis-berlin-price-map.png
+images/thesis-chicago-listings.png
+images/thesis-city-comparison.png
+images/thesis-classification-accuracy.png
+images/thesis-knn-diagram.png
+images/thesis-madrid-listings.png
+images/ud-add distribution-3cities_horizontal.png
+images/ud-berlin-data.png
+images/ud-chicago-data.png
+images/ud-fig130-chicago-real.png
+images/ud-fig131-chicago-classified.png
+images/ud-fig25-distributions.png
+images/ud-fig33-k-selection.png
+images/ud-fig63-berlin-price.png
+images/ud-fig64-berlin-demand.png
+images/ud-fig65-berlin-roomtype.png
+images/ud-fig97-price-3cities-map.png
+images/ud-fig97-price-3cities.png
+images/ud-fig98-demand-3cities-map.png
+images/ud-fig98-demand-3cities.png
+images/ud-fig99-roomtype-3cities-map.png
+images/ud-fig99-roomtype-3cities.png
+images/ud-madrid-data.png
+images/ud-tourismflow-3cities-map.png
+images/UrbanDynamics_BerlinPredictions.png
+images/UrbanDynamics_ChicagoPredictions.png
+images/UrbanDynamics_MadridPredictions.png

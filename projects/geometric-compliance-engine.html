@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carmen Rubio Garcia — Geometric Compliance Engine</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="wrap">
+  <div class="nav">
+    <a class="name" href="../index.html">Carmen Rubio Garcia</a>
+    <ul>
+      <li><a class="current" href="../index.html">Projects</a></li>
+      <li><a href="../research.html">Research</a></li>
+      <li><a href="../about.html">About</a></li>
+    </ul>
+  </div>
+</header>
+
+<section class="page-title wrap">
+  <p class="back-link"><a href="../index.html">&larr; All projects</a></p>
+  <h1>Geometric Compliance Engine</h1>
+  <p class="taxonomy">APPLIED AI &middot; COMPUTATIONAL GEOMETRY &middot; BIM</p>
+  <p class="project-subtitle">AI-assisted translation of building regulations into computable rules for models in IFC format</p>
+  <p class="taxonomy">THREE.JS &middot; LLM PIPELINE (GEMINI) &middot; RULE ENGINE &middot; BIM</p>
+</section>
+
+<section class="section wrap project-page">
+  <div class="research-item" id="geometric-compliance-engine">
+
+    <!-- OVERVIEW -->
+    <div class="fig-block" style="margin-top:0; padding-top:0;">
+      <div class="fig-kicker">Overview</div>
+
+      <p>
+        <strong>A research prototype investigating how natural-language building regulations can be translated into computable geometric 
+          constraints and evaluated against BIM (Building Information Management) models using IFC (Industry Foundation Classes), an open data standard for representing the geometry, 
+          properties and relationships of building elements.</strong>
+      </p>
+
+      <p>
+        The system connects building-code documents with BIM models. A browser-based viewer built with Three.js
+        and web-ifc loads IFC models client-side, while a separate LLM pipeline reads building-code PDFs, extracts
+        the clauses relevant to a given building element, and translates them into structured rules mapped onto
+        the IFC schema.
+      </p>
+
+      <p>
+        For the current prototype, the scope is narrowed to door regulations under the Spanish accessibility code
+        (CTE DB-SUA). Violations are reported with a reference to the exact code section and page, and
+        non-compliant elements are highlighted directly in the 3D model.
+      </p>
+
+      <figure class="fig-shot">
+        <img
+          src="../images/ifc-viewer-model-popup.png"
+          alt="The IFC Code Viewer interface, showing the category panel and a compliance-check result reporting 54 doors with violations">
+        <figcaption>
+          The browser-based viewer used throughout this project: an IFC model loaded client-side, element
+          categories that can be toggled on and off, and the result of a compliance check reported directly in
+          the interface.
+        </figcaption>
+      </figure>
+
+      <div class="flow-diagram">
+        <div class="flow-step">
+          <div class="flow-step-title">Building code</div>
+          <ul class="flow-step-list">
+            <li>CTE DB-SUA</li>
+            <li>Natural language</li>
+          </ul>
+        </div>
+
+        <div class="flow-arrow">&rarr;</div>
+
+        <div class="flow-step">
+          <div class="flow-step-title">Relevant requirements</div>
+          <ul class="flow-step-list">
+            <li>Extracted clauses</li>
+            <li>Section + page kept</li>
+          </ul>
+        </div>
+
+        <div class="flow-arrow">&rarr;</div>
+
+        <div class="flow-step">
+          <div class="flow-step-title">Structured geometric rules</div>
+          <ul class="flow-step-list">
+            <li>Element &middot; property</li>
+            <li>Operator &middot; value</li>
+          </ul>
+        </div>
+
+        <div class="flow-arrow">&rarr;</div>
+
+        <div class="flow-step">
+          <div class="flow-step-title">IFC properties + geometry</div>
+          <ul class="flow-step-list">
+            <li>IfcDoor</li>
+            <li>Width, height &hellip;</li>
+          </ul>
+        </div>
+
+        <div class="flow-arrow">&rarr;</div>
+
+        <div class="flow-step">
+          <div class="flow-step-title">Rule evaluation</div>
+          <ul class="flow-step-list">
+            <li>Actual vs. required</li>
+            <li>PASS / FAIL</li>
+          </ul>
+        </div>
+
+        <div class="flow-arrow">&rarr;</div>
+
+        <div class="flow-step flow-step-final">
+          <div class="flow-step-title">Spatial compliance feedback</div>
+          <ul class="flow-step-list">
+            <li>Highlighted in 3D model</li>
+            <li>Traced to source clause</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="pipeline-label">Concrete example &mdash; minimum accessible door width</p>
+      <div class="pipeline">Natural language <span class="arrow">&rarr;</span> <code>IfcDoor.width &ge; 800 mm</code> <span class="arrow">&rarr;</span> IFC model <span class="arrow">&rarr;</span> PASS / FAIL</div>
+    </div>
+
+
+    <!-- 01 — INTERPRETING BUILDING REGULATIONS -->
+    <div class="fig-block">
+      <div class="fig-kicker">01 &mdash; Interpreting building regulations</div>
+      <h4 class="fig-title">Turning a legal document into searchable, sourced clauses</h4>
+
+      <p>
+        Building codes contain hundreds of requirements expressed through natural language, diagrams, exceptions
+        and references between sections.
+      </p>
+
+      <p>
+        The first stage uses an LLM to search the regulation for requirements associated with a particular
+        building element &mdash; in this prototype, doors. The prototype currently extracts requirements such as
+        accessibility conditions, minimum opening widths, door clearances, threshold conditions, relationships
+        with stairs and ramps, and door safety requirements.
+      </p>
+
+      <p>
+        Rather than asking the model directly whether a building complies, the system first extracts the relevant
+        clauses and preserves their source, section and context. This creates an intermediate layer between the
+        original regulatory document and the geometric analysis of the building.
+      </p>
+
+      <figure class="fig-compact-lg">
+        <img
+          src="../images/regulation-extraction.png"
+          alt="A CTE DB-SUA regulation page with the relevant clause highlighted, next to the structured record extracted from it">
+        <figcaption>
+          A clause from the DBSUA accessibility code (Anejo A, page 36) with the relevant sentence highlighted,
+          and the structured record the LLM extraction step produces from it.
+        </figcaption>
+      </figure>
+    </div>
+
+
+    <!-- 02 — FROM LANGUAGE TO GEOMETRIC RULES -->
+    <div class="fig-block">
+      <div class="fig-kicker">02 &mdash; From language to geometric rules</div>
+      <h4 class="fig-title">Translating a clause into a computable constraint</h4>
+
+      <p>
+        Relevant clauses are translated into a constrained, machine-readable representation that can be evaluated
+        computationally. Each rule defines a building element, measurable property, comparison operator and
+        required value, while retaining its connection to the original regulation.
+      </p>
+
+      <div class="tech-panel">
+        <div class="tech-panel-label">Rule structure</div>
+        <div class="tech-group">
+          <div class="tech-row"><span class="tech-key">Element</span><span>IfcDoor</span></div>
+          <div class="tech-row"><span class="tech-key">Property</span><span>width</span></div>
+          <div class="tech-row"><span class="tech-key">Operator</span><span>&ge;</span></div>
+          <div class="tech-row"><span class="tech-key">Value</span><span>800 mm</span></div>
+          <div class="tech-row"><span class="tech-key">Source</span><span>DBSUA / Anejo A</span></div>
+        </div>
+      </div>
+
+      <p>For example:</p>
+      <div class="pipeline">&ldquo;Accessible doors must provide a minimum clear opening width of 800 mm.&rdquo; <span class="arrow">&rarr;</span> <code>IfcDoor &rarr; width &ge; 800 mm</code></div>
+
+      <figure class="fig-shot">
+        <img
+          src="../images/ifc-viewer-code-rule.png"
+          alt="A door-width clause from the DBSUA accessibility code next to the structured rule the LLM pipeline extracts from it">
+        <figcaption>
+          A clause from the DBSUA accessibility code (top) and the structured rule generated from it, with its
+          source document and page retained.
+        </figcaption>
+      </figure>
+
+      <p class="predict-line">AI INTERPRETS THE CODE &middot; DETERMINISTIC CODE PERFORMS THE CHECK</p>
+
+      <p>
+        The language model therefore acts as an interface between an unstructured regulatory document and a
+        deterministic geometric checking system, rather than making the final compliance decision itself.
+      </p>
+    </div>
+
+
+    <!-- 03 — IFC AS THE BUILDING REPRESENTATION -->
+    <div class="fig-block">
+      <div class="fig-kicker">03 &mdash; IFC as the building representation</div>
+      <h4 class="fig-title">What the model actually knows about a door</h4>
+
+      <p>
+        Alongside the rules, an IFC parser reads the building model itself. For every <code>IfcDoor</code>, it
+        currently extracts:
+      </p>
+
+      <ul class="feature-list">
+        <li>Express ID</li>
+        <li>Global ID</li>
+        <li>Name</li>
+        <li>Width</li>
+        <li>Height</li>
+        <li>External / internal</li>
+        <li>Level</li>
+      </ul>
+
+      <p>
+        A constrained IFC schema also tells the LLM exactly which properties it is allowed to reason with when
+        generating rules &mdash; and this is where the gap between the regulation and the model becomes visible.
+      </p>
+
+      <div class="bridge-diagram">
+        <div class="bridge-tier">
+          <div class="bridge-tier-label">Regulation space</div>
+          <div class="bridge-tier-items">clear opening &middot; threshold &middot; turning clearance &middot; distance to stair &middot; clear space in front &middot; accessible route &middot; &hellip;</div>
+        </div>
+        <div class="bridge-arrow">&darr;</div>
+        <div class="bridge-tier bridge-tier--ifc">
+          <div class="bridge-tier-label">IFC information available</div>
+          <div class="bridge-tier-items">OverallWidth &middot; OverallHeight &middot; IsExternal &middot; &hellip;</div>
+        </div>
+      </div>
+
+      <figure class="fig-shot">
+        <img
+          src="../images/ifc-viewer-model-neutral.png"
+          alt="IFC model loaded in the viewer, shown alongside the category panel">
+        <figcaption>
+          A building IFC model loaded and rendered client-side, with model elements organised into
+          interactive categories that can be toggled on and off. An uploaded code file is checked against the
+          loaded model directly in the browser.
+        </figcaption>
+      </figure>
+    </div>
+
+
+    <!-- 04 — COMPLIANCE EVALUATION -->
+    <div class="fig-block">
+      <div class="fig-kicker">04 &mdash; Compliance evaluation</div>
+      <h4 class="fig-title">Checking every door against its rules</h4>
+
+      <p>
+        A conventional, deterministic rule engine compares each IFC door against the rules generated for it.
+      </p>
+
+      <div class="pipeline">Actual IFC value <span class="arrow">&rarr;</span> logical operator <span class="arrow">&rarr;</span> regulatory requirement <span class="arrow">&rarr;</span> PASS / FAIL</div>
+
+      <div class="tech-panel">
+        <div class="tech-panel-label">Door #216401</div>
+        <div class="tech-group">
+          <div class="tech-row"><span class="tech-key">Width</span><span>762 mm</span></div>
+          <div class="tech-row"><span class="tech-key">Required</span><span>&ge; 800 mm</span></div>
+          <div class="tech-row"><span class="tech-key">Result</span><span><strong>FAIL</strong></span></div>
+        </div>
+      </div>
+
+      <p>Every violation retains a full trail back to its source, rather than only a pass/fail flag:</p>
+
+      <ul class="feature-list">
+        <li>Actual value</li>
+        <li>Required value</li>
+        <li>Issue description</li>
+        <li>Code document</li>
+        <li>Code section</li>
+        <li>Document page</li>
+      </ul>
+
+      <p>
+        Instead of only reporting FAIL, the system maintains a chain: <strong>building element &harr; failed rule
+        &harr; source regulation.</strong>
+      </p>
+    </div>
+
+
+    <!-- 05 — CONNECTING THE RESULT BACK TO GEOMETRY -->
+    <div class="fig-block">
+      <div class="fig-kicker">05 &mdash; Connecting the result back to geometry</div>
+      <h4 class="fig-title">Making violations visible in the model</h4>
+
+      <p>
+        The browser-based IFC viewer closes the loop between the compliance check and the building itself.
+      </p>
+
+      <div class="pipeline vertical">IFC upload <span class="arrow">&rarr;</span> Three.js / web-ifc model <span class="arrow">&rarr;</span> IFC categories <span class="arrow">&rarr;</span> compliance API <span class="arrow">&rarr;</span> violating Express IDs <span class="arrow">&rarr;</span> red 3D subset</div>
+
+      <figure class="fig-shot">
+        <img
+          src="../images/ifc-viewer-compliance.png"
+          alt="Compliance check highlighting non-compliant elements in red on an otherwise grey and white 3D model">
+        <figcaption>
+          Compliance results mapped back onto the model. Non-compliant elements are highlighted directly in the
+          3D geometry.
+        </figcaption>
+      </figure>
+
+      <p>
+        Compliance results are mapped back to IFC element IDs, allowing failed requirements to be located
+        directly within the 3D building model.
+      </p>
+    </div>
+
+
+    <!-- THE LIMITATION THIS PROTOTYPE EXPOSED -->
+    <div class="fig-block synthesis">
+      <div class="fig-kicker">The limitation this prototype exposed</div>
+      <h4 class="fig-title">Regulations describe relationships, not just properties</h4>
+
+      <p>
+        The current schema tells the model it can reason with a door&rsquo;s own attributes &mdash;
+        <code>width</code>, <code>height</code>, <code>is_external</code>. But the regulation also contains
+        requirements that are not attributes of the door itself: distance between a door and a staircase,
+        clearance to a fixed object, turning diameter in front of a door, threshold height.
+      </p>
+
+      <p>
+        Because the schema has no way to express those relationships, the model falls back to the properties it
+        does have &mdash; sometimes producing rules that are syntactically valid but semantically wrong:
+      </p>
+
+      <div class="compare-grid">
+        <div class="compare-card">
+          <span class="compare-label">Regulation says</span>
+          <p>Minimum horizontal distance from a door to a stair: 400 mm</p>
+        </div>
+        <div class="compare-card">
+          <span class="compare-label">Generated rule</span>
+          <code>door.width &ge; 400</code>
+        </div>
+      </div>
+
+      <div class="compare-grid">
+        <div class="compare-card">
+          <span class="compare-label">Regulation says</span>
+          <p>Threshold height: 50 mm</p>
+        </div>
+        <div class="compare-card">
+          <span class="compare-label">Generated rule</span>
+          <code>door.height &le; 50</code>
+        </div>
+      </div>
+
+      <p>
+        That second rule causes an obviously false violation, since the IFC door height is typically around
+        2100 mm. This isn&rsquo;t just a bug worth hiding &mdash; it reveals the actual research problem:
+        <strong>building regulations describe relationships, not just properties.</strong>
+      </p>
+
+      <p>
+        To evaluate these regulations correctly, the system needs to move from single-element properties to
+        geometric predicates &mdash; relationships between elements and their context:
+      </p>
+
+      <ul class="feature-list">
+        <li><code>distance(door, stair) &ge; 400</code></li>
+        <li><code>threshold_height(door) &le; 50</code></li>
+        <li><code>clear_space_in_front_of(door) &ge; 1200</code></li>
+        <li><code>IF door &isin; accessible_route THEN clear_width(door) &ge; 800</code></li>
+      </ul>
+
+      <p>
+        The prototype exposed a fundamental challenge in automated code compliance: many regulations cannot be
+        reduced to attributes stored directly on BIM elements. They describe spatial relationships, context and
+        derived geometry.
+      </p>
+
+      <p>
+        The next stage of the research therefore moves from property checking toward constructing geometric
+        predicates &mdash; distance, clearance, adjacency, accessibility and spatial containment &mdash; from IFC
+        geometry.
+      </p>
+
+      <div class="compare-grid">
+        <div class="compare-card">
+          <span class="compare-label">Simple property rule</span>
+          <code>door.width &ge; 800</code>
+        </div>
+        <div class="compare-card">
+          <span class="compare-label">Spatial rule</span>
+          <code>distance(door, stair) &ge; 400</code>
+        </div>
+        <div class="compare-card">
+          <span class="compare-label">Contextual rule</span>
+          <code>IF door &isin; accessible_route &rarr; width &ge; 800</code>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer class="wrap">
+  Carmen Rubio Garcia &middot; London, UK
+</footer>
+
+</body>
+</html>
