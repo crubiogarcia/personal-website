@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Carmen Rubio Garcia — Contour Processing</title>
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+
+<header class="wrap">
+  <div class="nav">
+    <a class="name" href="../index.html">Carmen Rubio Garcia</a>
+    <ul>
+      <li><a class="current" href="../index.html">Projects</a></li>
+      <li><a href="../research.html">Research</a></li>
+      <li><a href="../about.html">About</a></li>
+    </ul>
+  </div>
+</header>
+
+<section class="page-title wrap">
+  <p class="back-link"><a href="../index.html">&larr; All projects</a></p>
+  <h1>Contour Processing</h1>
+  <p class="taxonomy">GEOMETRY PROCESSING &middot; GRAPH ALGORITHMS &middot; DIGITAL FABRICATION</p>
+  <p class="project-subtitle">Turning large sets of contour curves into structured terrain geometry for fabrication.</p>
+</section>
+
+<section class="section wrap project-page">
+
+  <div class="fig-block" style="margin-top:0; padding-top:0;">
+    <div class="fig-kicker">Overview</div>
+
+    <p>
+      Contour Processing is a geometry-processing workflow for turning raw CAD contour curves into stepped
+      terrain models.
+    </p>
+
+    <p>
+      The input data is often fragmented and difficult to use directly. The workflow cleans and organises the
+      contours by elevation, builds adjacency relationships between neighbouring regions, and uses Breadth-First
+      Search to identify the connected surfaces that belong to the terrain.
+    </p>
+
+    <p>
+      The method was implemented in IronPython for Grasshopper and tested on datasets containing more than 1,000
+      contour curves.
+    </p>
+
+    <div class="flow-diagram">
+      <div class="flow-step">
+        <div class="flow-step-title">Raw contour data</div>
+        <ul class="flow-step-list">
+          <li>Fragmented curves</li>
+          <li>Multiple elevations</li>
+          <li>Large datasets</li>
+        </ul>
+      </div>
+
+      <div class="flow-arrow">&rarr;</div>
+
+      <div class="flow-step">
+        <div class="flow-step-title">Clean + organise</div>
+        <ul class="flow-step-list">
+          <li>Group by elevation</li>
+          <li>Remove invalid geometry</li>
+        </ul>
+      </div>
+
+      <div class="flow-arrow">&rarr;</div>
+
+      <div class="flow-step">
+        <div class="flow-step-title">Build relationships</div>
+        <ul class="flow-step-list">
+          <li>Detect neighbouring regions</li>
+          <li>Create adjacency graph</li>
+        </ul>
+      </div>
+
+      <div class="flow-arrow">&rarr;</div>
+
+      <div class="flow-step">
+        <div class="flow-step-title">Breadth-First Search</div>
+        <ul class="flow-step-list">
+          <li>Traverse connected regions</li>
+          <li>Identify terrain surfaces</li>
+        </ul>
+      </div>
+
+      <div class="flow-arrow">&rarr;</div>
+
+      <div class="flow-step">
+        <div class="flow-step-title">Reconstruct geometry</div>
+        <ul class="flow-step-list">
+          <li>Build stepped terrain</li>
+          <li>Prepare output for fabrication</li>
+        </ul>
+      </div>
+
+      <div class="flow-arrow">&rarr;</div>
+
+      <div class="flow-step flow-step-final">
+        <div class="flow-step-title">CNC-ready model</div>
+        <ul class="flow-step-list">
+          <li>Stepped terrain geometry</li>
+          <li>Prepared for CNC machining</li>
+        </ul>
+      </div>
+    </div>
+
+    <img class="project-img" src="../../images/topography_diagram_03.png" alt="Stepped terrain model generated from contour curves, shown above the original contour diagram">
+  </div>
+
+
+  <div class="fig-block">
+    <div class="fig-kicker">From geometry to a graph</div>
+
+    <p>
+      A key part of the workflow is representing the terrain regions as a graph. Each region becomes a node,
+      while adjacency between regions defines the connections between them.
+    </p>
+
+    <p>
+      Breadth-First Search is then used to traverse this structure and identify the connected regions that form
+      the terrain.
+    </p>
+
+    <p>
+      This turns a practical fabrication problem into a more general computational one: transforming noisy
+      geometric input into a structured representation that can be searched, classified and rebuilt.
+    </p>
+
+    <p>
+      Once the relevant regions have been identified, the geometry is reconstructed as a stepped terrain model
+      ready for CNC machining.
+    </p>
+  </div>
+
+  <div class="project-links"><a href="https://github.com/crubiogarcia/ContourCurveTopographyProcessing" target="_blank" rel="noopener">GitHub</a></div>
+</section>
+
+<footer class="wrap">
+  Carmen Rubio Garcia &middot; London, UK
+</footer>
+
+</body>
+</html>

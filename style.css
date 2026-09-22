@@ -114,6 +114,7 @@ h3, .about h3{
 .section-divider.section-divider--tight{ margin:0 0 38px; border-top-color:#a8a8a8; }
 .page-title h1{ font-size:20px; letter-spacing:0.3px; font-weight:bold; margin-bottom:16px; }
 .page-title p{ color:var(--body); max-width:760px; }
+.about-intro{ margin-bottom:12px; }
 .page-title .intro-lead{ color:var(--ink); font-size:15px; font-weight:normal; line-height:1.5; max-width:600px; }
 .about-contact{ font-size:13px; color:var(--muted); margin-top:22px; }
 .about-contact a{ color:var(--ink); text-decoration:underline; }
@@ -272,6 +273,8 @@ h3, .about h3{
 .flow-step-title{ font-size:10.5px; font-weight:bold; color:var(--ink); text-transform:uppercase;
   letter-spacing:0.8px; margin-bottom:8px; padding-bottom:7px; border-bottom:1px solid var(--line); }
 .flow-step-list{ list-style:none; margin:0; padding:0; font-size:11.5px; color:var(--muted); line-height:1.7; }
+.flow-step-list li{ position:relative; padding-left:12px; }
+.flow-step-list li::before{ content:"\2022"; position:absolute; left:0; color:var(--muted); }
 .flow-arrow{ flex:0 0 26px; display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:14px; }
 
 .data-table{ width:100%; max-width:420px; border-collapse:collapse; font-size:13.5px; margin:14px 0; }

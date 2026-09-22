@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Carmen Rubio Garcia — Differential Growth</title>
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+
+<header class="wrap">
+  <div class="nav">
+    <a class="name" href="../index.html">Carmen Rubio Garcia</a>
+    <ul>
+      <li><a class="current" href="../index.html">Projects</a></li>
+      <li><a href="../research.html">Research</a></li>
+      <li><a href="../about.html">About</a></li>
+    </ul>
+  </div>
+</header>
+
+<section class="page-title wrap">
+  <p class="back-link"><a href="../index.html">&larr; All projects</a></p>
+  <h1>Differential Growth</h1>
+  <p class="taxonomy">COMPUTER GRAPHICS &middot; COMPUTATIONAL GEOMETRY &middot; SIMULATION</p>
+  <p class="project-subtitle">Generating complex organic geometry from simple local growth and repulsion rules.</p>
+</section>
+
+<section class="section wrap project-page">
+
+  <div class="fig-block" style="margin-top:0; padding-top:0;">
+    <div class="fig-kicker">Overview</div>
+
+    <p>
+      Differential growth is when different parts of an organism grow at varying rates or directions, gradually
+      altering its form.
+    </p>
+
+    <p>
+      Using Kangaroo Physics, a physics simulation engine for Grasshopper, this project simulates a similar
+      process on a mesh. Local growth and repulsion rules are applied iteratively to nearby vertices,
+      progressively deforming the surface and producing more complex forms over time.
+    </p>
+
+    <p>
+      Changing parameters such as growth rate, repulsion strength and the starting mesh produces different
+      behaviours and forms.
+    </p>
+
+    <p>
+      The project is a simple experiment in emergent geometry, where complex forms develop from the repeated
+      interaction of a small set of local rules.
+    </p>
+
+    <div class="flow-diagram">
+      <div class="flow-step">
+        <div class="flow-step-title">Initial mesh</div>
+        <ul class="flow-step-list">
+          <li>Base geometry</li>
+          <li>No growth applied yet</li>
+        </ul>
+      </div>
+
+      <div class="flow-arrow">&rarr;</div>
+
+      <div class="flow-step">
+        <div class="flow-step-title">Local growth</div>
+        <ul class="flow-step-list">
+          <li>Edges expand</li>
+          <li>New space is introduced</li>
+        </ul>
+      </div>
+
+      <div class="flow-arrow">&rarr;</div>
+
+      <div class="flow-step">
+        <div class="flow-step-title">Repulsion</div>
+        <ul class="flow-step-list">
+          <li>Nearby vertices push apart</li>
+          <li>Self-intersection is reduced</li>
+        </ul>
+      </div>
+
+      <div class="flow-arrow">&rarr;</div>
+
+      <div class="flow-step">
+        <div class="flow-step-title">Iterative simulation</div>
+        <ul class="flow-step-list">
+          <li>Local rules applied repeatedly</li>
+        </ul>
+      </div>
+
+      <div class="flow-arrow">&rarr;</div>
+
+      <div class="flow-step flow-step-final">
+        <div class="flow-step-title">Emergent geometry</div>
+        <ul class="flow-step-list">
+          <li>Complex global form from simple local behaviour</li>
+        </ul>
+      </div>
+    </div>
+
+    <img class="project-img" src="../../images/differential.png" alt="Differential Growth">
+  </div>
+
+  <div class="project-links"><a href="https://github.com/crubiogarcia/Differential-Growth" target="_blank" rel="noopener">GitHub</a></div>
+</section>
+
+<footer class="wrap">
+  Carmen Rubio Garcia &middot; London, UK
+</footer>
+
+</body>
+</html>

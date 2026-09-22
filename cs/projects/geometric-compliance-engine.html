@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Carmen Rubio Garcia — Geometric Compliance Engine</title>
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+
+<header class="wrap">
+  <div class="nav">
+    <a class="name" href="../index.html">Carmen Rubio Garcia</a>
+    <ul>
+      <li><a class="current" href="../index.html">Projects</a></li>
+      <li><a href="../research.html">Research</a></li>
+      <li><a href="../about.html">About</a></li>
+    </ul>
+  </div>
+</header>
+
+<section class="page-title wrap">
+  <p class="back-link"><a href="../index.html">&larr; All projects</a></p>
+  <h1>Geometric Compliance Engine</h1>
+  <p class="taxonomy">APPLIED AI &middot; COMPUTATIONAL GEOMETRY &middot; STRUCTURED DATA</p>
+  <p class="project-subtitle">Translating natural-language building regulations into computable geometric rules.</p>
+</section>
+
+<section class="section wrap project-page">
+  <div class="research-item" id="geometric-compliance-engine">
+
+    <!-- OVERVIEW -->
+    <div class="fig-block" style="margin-top:0; padding-top:0;">
+      <div class="fig-kicker">Overview</div>
+
+      <p>
+        <strong>Geometric Compliance Engine is a research prototype exploring how building regulations written in natural language can be translated into rules that can be checked against a 3D building model.</strong>
+      </p>
+
+      <p>
+        The system uses a language model to identify relevant requirements in a building code and translate
+        them into a structured format. These rules are then evaluated against data from the building model
+        using deterministic code.
+      </p>
+
+      <p>
+        For the current prototype, I focused on accessibility requirements for doors. When a rule fails, the
+        system identifies the affected element, highlights it in the 3D model, and keeps a reference to the
+        original regulation.
+      </p>
+
+      <p>
+        The prototype is built with a browser-based 3D viewer in Three.js, an LLM-based pipeline for extracting
+        and structuring the regulatory text, and a deterministic rule engine that evaluates the resulting rules
+        against structured 3D model data.
+      </p>
+
+      <figure class="fig-shot">
+        <img
+          src="../../images/ifc-viewer-model-popup.png"
+          alt="The 3D compliance viewer interface, showing the category panel and a compliance-check result reporting violations">
+        <figcaption>
+          The browser-based viewer used throughout this project: a building model loaded client-side, element
+          categories that can be toggled on and off, and the result of a compliance check reported directly in
+          the interface.
+        </figcaption>
+      </figure>
+
+      <div class="flow-diagram">
+        <div class="flow-step">
+          <div class="flow-step-title">Building regulation</div>
+          <ul class="flow-step-list">
+            <li>Natural language</li>
+            <li>Exceptions and references</li>
+            <li>Source document</li>
+          </ul>
+        </div>
+
+        <div class="flow-arrow">&rarr;</div>
+
+        <div class="flow-step">
+          <div class="flow-step-title">Relevant requirements</div>
+          <ul class="flow-step-list">
+            <li>Extracted clauses</li>
+            <li>Source and context retained</li>
+          </ul>
+        </div>
+
+        <div class="flow-arrow">&rarr;</div>
+
+        <div class="flow-step">
+          <div class="flow-step-title">Structured geometric rules</div>
+          <ul class="flow-step-list">
+            <li>Element</li>
+            <li>Property</li>
+            <li>Operator</li>
+            <li>Value</li>
+          </ul>
+        </div>
+
+        <div class="flow-arrow">&rarr;</div>
+
+        <div class="flow-step">
+          <div class="flow-step-title">3D model</div>
+          <ul class="flow-step-list">
+            <li>Elements</li>
+            <li>Properties</li>
+            <li>Geometry</li>
+          </ul>
+        </div>
+
+        <div class="flow-arrow">&rarr;</div>
+
+        <div class="flow-step">
+          <div class="flow-step-title">Rule evaluation</div>
+          <ul class="flow-step-list">
+            <li>Actual vs required</li>
+            <li>PASS / FAIL</li>
+          </ul>
+        </div>
+
+        <div class="flow-arrow">&rarr;</div>
+
+        <div class="flow-step flow-step-final">
+          <div class="flow-step-title">Spatial feedback</div>
+          <ul class="flow-step-list">
+            <li>Failed elements highlighted in 3D</li>
+            <li>Result traced back to source</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="pipeline-label">Example</p>
+      <div class="pipeline">Natural language <span class="arrow">&rarr;</span> <code>door.width &ge; 800 mm</code> <span class="arrow">&rarr;</span> 3D model <span class="arrow">&rarr;</span> PASS / FAIL</div>
+    </div>
+
+
+    <!-- 01 — INTERPRETING BUILDING REGULATIONS -->
+    <div class="fig-block">
+      <div class="fig-kicker">01 &mdash; Interpreting building regulations</div>
+      <h4 class="fig-title">Turning a legal document into structured requirements</h4>
+
+      <p>
+        Building regulations contain hundreds of requirements written in natural language, often mixed with
+        diagrams, exceptions and references to other parts of the document.
+      </p>
+
+      <p>
+        The first stage uses a language model to find the requirements related to a particular type of building
+        element &mdash; in this prototype, doors. These include minimum opening widths, clearance requirements,
+        threshold conditions and relationships with stairs and ramps.
+      </p>
+
+      <p>
+        Rather than asking the model directly whether a building complies, the system first extracts the
+        relevant clauses and keeps their source, section and context.
+      </p>
+
+      <p>
+        This provides a structured intermediate step between the original regulation and the geometric checks
+        that follow.
+      </p>
+
+      <figure class="fig-compact-lg">
+        <img
+          src="../../images/regulation-extraction.png"
+          alt="A building regulation page with the relevant clause highlighted, next to the structured record extracted from it">
+        <figcaption>
+          A clause from the accessibility regulation, with the relevant sentence highlighted, and the structured
+          record the extraction step produces from it.
+        </figcaption>
+      </figure>
+    </div>
+
+
+    <!-- 02 — FROM LANGUAGE TO GEOMETRIC RULES -->
+    <div class="fig-block">
+      <div class="fig-kicker">02 &mdash; From language to geometric rules</div>
+      <h4 class="fig-title">Turning a requirement into something that can be evaluated</h4>
+
+      <p>
+        Once a relevant clause has been found, it is translated into a simple machine-readable rule.
+      </p>
+
+      <p>For example:</p>
+      <div class="pipeline">&ldquo;Accessible doors must provide a minimum clear opening width of 800 mm.&rdquo; <span class="arrow">&rarr;</span> <code>Door &rarr; width &ge; 800 mm</code></div>
+
+      <p>Each rule contains:</p>
+
+      <div class="tech-panel">
+        <div class="tech-panel-label">Rule structure</div>
+        <div class="tech-group">
+          <div class="tech-row"><span class="tech-key">Element</span><span>Door</span></div>
+          <div class="tech-row"><span class="tech-key">Property</span><span>width</span></div>
+          <div class="tech-row"><span class="tech-key">Operator</span><span>&ge;</span></div>
+          <div class="tech-row"><span class="tech-key">Value</span><span>800 mm</span></div>
+          <div class="tech-row"><span class="tech-key">Source</span><span>Original regulation + section + page</span></div>
+        </div>
+      </div>
+
+      <figure class="fig-shot">
+        <img
+          src="../../images/ifc-viewer-code-rule.png"
+          alt="A door-width clause from the accessibility regulation next to the structured rule the pipeline extracts from it">
+        <figcaption>
+          A clause from the accessibility regulation (top) and the structured rule generated from it, with its
+          source document and page retained.
+        </figcaption>
+      </figure>
+
+      <p>
+        The language model is used to interpret the regulation, but it does not make the final compliance
+        decision.
+      </p>
+
+      <p class="predict-line">AI INTERPRETS THE CODE &middot; DETERMINISTIC CODE PERFORMS THE CHECK</p>
+
+      <p>
+        Once the rule has been generated, regular code evaluates it against the building model. This keeps the
+        interpretation step separate from the final calculation and makes the result easier to trace.
+      </p>
+    </div>
+
+
+    <!-- 03 — REPRESENTING THE BUILDING AS DATA -->
+    <div class="fig-block">
+      <div class="fig-kicker">03 &mdash; Representing the building as data</div>
+      <h4 class="fig-title">What does the system actually know about a door?</h4>
+
+      <p>
+        The other side of the problem is the information available in the 3D building model. For each door, the
+        prototype currently extracts:
+      </p>
+
+      <ul class="feature-list">
+        <li>Unique ID</li>
+        <li>Name</li>
+        <li>Width</li>
+        <li>Height</li>
+        <li>Internal / external classification</li>
+        <li>Level</li>
+      </ul>
+
+      <p>
+        The language model is only allowed to generate rules using information that the system knows how to
+        retrieve from the model.
+      </p>
+
+      <p>
+        This is where one of the main limitations becomes visible. Regulations often describe things that are
+        not stored as simple properties of an individual element.
+      </p>
+
+      <div class="bridge-diagram">
+        <div class="bridge-tier">
+          <div class="bridge-tier-label">Regulation describes</div>
+          <div class="bridge-tier-items">clear opening &middot; threshold &middot; turning space &middot; distance to stair &middot; clear space &middot; accessible route &middot; &hellip;</div>
+        </div>
+        <div class="bridge-arrow">&darr;</div>
+        <div class="bridge-tier bridge-tier--ifc">
+          <div class="bridge-tier-label">Model directly contains</div>
+          <div class="bridge-tier-items">width &middot; height &middot; classification &middot; level &middot; &hellip;</div>
+        </div>
+      </div>
+
+      <p>
+        What the system can evaluate therefore depends on how much of the regulation can be expressed using the
+        information available in the model.
+      </p>
+
+      <figure class="fig-shot">
+        <img
+          src="../../images/ifc-viewer-model-neutral.png"
+          alt="3D building model loaded in the viewer, shown alongside the category panel">
+        <figcaption>
+          A building model loaded and rendered client-side, with model elements organised into interactive
+          categories that can be toggled on and off. An uploaded regulation file is checked against the loaded
+          model directly in the browser.
+        </figcaption>
+      </figure>
+    </div>
+
+
+    <!-- 04 — COMPLIANCE EVALUATION -->
+    <div class="fig-block">
+      <div class="fig-kicker">04 &mdash; Compliance evaluation</div>
+      <h4 class="fig-title">Checking the rules against the model</h4>
+
+      <p>
+        Once a rule has been generated, a deterministic rule engine checks it against every relevant element.
+      </p>
+
+      <div class="pipeline">Model value <span class="arrow">&rarr;</span> operator <span class="arrow">&rarr;</span> requirement <span class="arrow">&rarr;</span> PASS / FAIL</div>
+
+      <p>For example:</p>
+
+      <div class="tech-panel">
+        <div class="tech-panel-label">Door #216401</div>
+        <div class="tech-group">
+          <div class="tech-row"><span class="tech-key">Width</span><span>762 mm</span></div>
+          <div class="tech-row"><span class="tech-key">Required</span><span>&ge; 800 mm</span></div>
+          <div class="tech-row"><span class="tech-key">Result</span><span><strong>FAIL</strong></span></div>
+        </div>
+      </div>
+
+      <p>For each failed check, the system keeps:</p>
+
+      <ul class="feature-list">
+        <li>Actual value</li>
+        <li>Required value</li>
+        <li>Issue description</li>
+        <li>Source document</li>
+        <li>Source section</li>
+        <li>Source page</li>
+      </ul>
+
+      <p>
+        This creates a traceable connection between: <strong>building element &harr; failed rule &harr; source
+        regulation.</strong>
+      </p>
+
+      <p>
+        So the result shows not only what failed, but also which requirement caused it and where that
+        requirement came from.
+      </p>
+    </div>
+
+
+    <!-- 05 — CONNECTING THE RESULT BACK TO GEOMETRY -->
+    <div class="fig-block">
+      <div class="fig-kicker">05 &mdash; Connecting the result back to geometry</div>
+      <h4 class="fig-title">Making violations visible in the model</h4>
+
+      <p>
+        The compliance results are then mapped back onto the 3D building model.
+      </p>
+
+      <div class="pipeline vertical">3D model <span class="arrow">&rarr;</span> element IDs <span class="arrow">&rarr;</span> rule evaluation <span class="arrow">&rarr;</span> failed IDs <span class="arrow">&rarr;</span> highlighted geometry</div>
+
+      <figure class="fig-shot">
+        <img
+          src="../../images/ifc-viewer-compliance.png"
+          alt="Compliance check highlighting non-compliant elements in red on an otherwise grey and white 3D model">
+        <figcaption>
+          Compliance results mapped back onto the model. Non-compliant elements are highlighted directly in the
+          3D geometry.
+        </figcaption>
+      </figure>
+
+      <p>
+        Each element has an ID that connects the data used during the check with its geometry in the viewer.
+        When an element fails, that same ID is used to highlight it directly in the model.
+      </p>
+
+      <p>
+        This makes the result easier to understand spatially, rather than presenting compliance only as a list
+        of errors.
+      </p>
+    </div>
+
+
+    <!-- 06 — WHERE THE REPRESENTATION BREAKS DOWN -->
+    <div class="fig-block synthesis">
+      <div class="fig-kicker">06 &mdash; Where the first approach breaks down</div>
+      <h4 class="fig-title">Regulations describe relationships, not just properties</h4>
+
+      <p>
+        One of the most useful results of the prototype was finding where this simple rule representation stops
+        working.
+      </p>
+
+      <p>
+        A rule such as: <code>door.width &ge; 800</code> works because width is already available as a property
+        of the door.
+      </p>
+
+      <p>
+        But many regulations describe relationships between an element and its surroundings:
+      </p>
+
+      <ul class="feature-list">
+        <li>Distance between a door and a staircase</li>
+        <li>Clear space in front of a door</li>
+        <li>Threshold height</li>
+        <li>Whether a door belongs to an accessible route</li>
+      </ul>
+
+      <p>
+        These relationships are not directly stored as properties of the door.
+      </p>
+
+      <p>
+        Because the first version of the system cannot represent them, it can sometimes generate rules that look
+        correct structurally but do not capture what the regulation actually means.
+      </p>
+
+      <p>For example:</p>
+
+      <div class="compare-grid">
+        <div class="compare-card">
+          <span class="compare-label">Regulation</span>
+          <p>Minimum horizontal distance between a door and a stair: 400 mm</p>
+        </div>
+        <div class="compare-card">
+          <span class="compare-label">Generated rule</span>
+          <code>door.width &ge; 400</code>
+        </div>
+      </div>
+
+      <p>Or:</p>
+
+      <div class="compare-grid">
+        <div class="compare-card">
+          <span class="compare-label">Regulation</span>
+          <p>Maximum threshold height: 50 mm</p>
+        </div>
+        <div class="compare-card">
+          <span class="compare-label">Generated rule</span>
+          <code>door.height &le; 50</code>
+        </div>
+      </div>
+
+      <p>
+        The problem is not simply that the generated values are wrong. The system is trying to describe a
+        spatial relationship using the wrong type of representation.
+      </p>
+
+      <p>
+        This exposed the main research problem behind the prototype: many building regulations describe
+        relationships between objects and their surroundings, rather than properties of individual objects.
+      </p>
+
+      <p class="pipeline-label">From properties to geometric relationships</p>
+
+      <p>
+        The next step is to extend the system beyond simple property checks and represent these spatial
+        relationships directly.
+      </p>
+
+      <p>
+        Instead of only evaluating: <code>door.width &ge; 800</code> the system would need to handle rules such
+        as:
+      </p>
+
+      <ul class="feature-list">
+        <li><code>distance(door, stair) &ge; 400</code></li>
+        <li><code>threshold_height(door) &le; 50</code></li>
+        <li><code>clear_space_in_front_of(door) &ge; 1200</code></li>
+        <li><code>IF door &isin; accessible_route THEN clear_width(door) &ge; 800</code></li>
+      </ul>
+
+      <p>
+        These values need to be derived from geometry and context rather than simply read from the model.
+      </p>
+
+      <p>
+        This leads to the broader question behind the project: <strong>how can requirements written in natural
+        language be translated into geometric relationships that a computer can evaluate?</strong>
+      </p>
+
+      <p>
+        The next stage of the research focuses on building these geometric relationships directly from the 3D
+        model.
+      </p>
+
+      <div class="compare-grid">
+        <div class="compare-card">
+          <span class="compare-label">Simple property rule</span>
+          <code>door.width &ge; 800</code>
+        </div>
+        <div class="compare-card">
+          <span class="compare-label">Spatial rule</span>
+          <code>distance(door, stair) &ge; 400</code>
+        </div>
+        <div class="compare-card">
+          <span class="compare-label">Contextual rule</span>
+          <code>IF door &isin; accessible_route &rarr; width &ge; 800</code>
+        </div>
+      </div>
+    </div>
+
+    <p class="project-links"><a href="https://github.com/crubiogarcia/geometric-compliance-engine" target="_blank" rel="noopener">GitHub</a></p>
+
+  </div>
+</section>
+
+<footer class="wrap">
+  Carmen Rubio Garcia &middot; London, UK
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Carmen Rubio Garcia — ReDesignMate — Adaptive Reuse Framework</title>
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+
+<header class="wrap">
+  <div class="nav">
+    <a class="name" href="../index.html">Carmen Rubio Garcia</a>
+    <ul>
+      <li><a class="current" href="../index.html">Projects</a></li>
+      <li><a href="../research.html">Research</a></li>
+      <li><a href="../about.html">About</a></li>
+    </ul>
+  </div>
+</header>
+
+<section class="page-title wrap">
+  <p class="back-link"><a href="../index.html">&larr; All projects</a></p>
+  <h1>ReDesignMate &mdash; Adaptive Reuse Framework</h1>
+  <p class="taxonomy">SOFTWARE &middot; PARAMETRIC SYSTEMS &middot; PERFORMANCE ANALYSIS</p>
+  <p class="project-subtitle">A computational tool for generating and comparing different renovation scenarios through structural and carbon analysis.</p>
+  <p class="project-links project-links--credit">Built at the AEC Hackathon, London &middot; 2025, with Jeroen Janssen, Rey Duong and Iliana Papadopoulou</p>
+</section>
+
+<section class="section wrap project-page">
+  <div class="research-item" id="redesignmate">
+
+    <!-- OVERVIEW -->
+    <div class="fig-block" style="margin-top:0; padding-top:0;">
+      <div class="fig-kicker">Overview</div>
+
+      <p>
+        ReDesignMate is a computational tool for exploring different ways to adapt and extend existing buildings.
+      </p>
+
+      <p>
+        It generates renovation scenarios from a set of configurable parameters, checks their structural
+        implications, and compares different fa&ccedil;ade and material options through embodied-carbon analysis.
+      </p>
+
+      <p>
+        The geometry is generated in Grasshopper, a visual programming environment for parametric modelling that
+        runs inside Rhino, a 3D modelling platform. A web interface connects to these models through Rhino
+        Compute, so users can change inputs, generate alternatives and see the results interactively.
+      </p>
+
+      <p>
+        The backend logic and Rhino Compute integration are written in C#, with the web interface itself built
+        in JavaScript.
+      </p>
+
+      <p>
+        The idea is to bring generation and analysis into the same workflow, so different options can be
+        explored and compared without treating each step separately.
+      </p>
+
+      <div class="flow-diagram">
+        <div class="flow-step">
+          <div class="flow-step-title">Existing building</div>
+          <ul class="flow-step-list">
+            <li>Retained structure</li>
+            <li>Starting geometry</li>
+          </ul>
+        </div>
+
+        <div class="flow-arrow">&rarr;</div>
+
+        <div class="flow-step">
+          <div class="flow-step-title">Generate alternatives</div>
+          <ul class="flow-step-list">
+            <li>Configurable inputs</li>
+            <li>Multiple scenarios</li>
+          </ul>
+        </div>
+
+        <div class="flow-arrow">&rarr;</div>
+
+        <div class="flow-step">
+          <div class="flow-step-title">Structural analysis</div>
+          <ul class="flow-step-list">
+            <li>Existing capacity</li>
+            <li>Proposed intervention</li>
+          </ul>
+        </div>
+
+        <div class="flow-arrow">&rarr;</div>
+
+        <div class="flow-step">
+          <div class="flow-step-title">Material / Fa&ccedil;ade options</div>
+          <ul class="flow-step-list">
+            <li>Alternative systems</li>
+            <li>Material choices</li>
+          </ul>
+        </div>
+
+        <div class="flow-arrow">&rarr;</div>
+
+        <div class="flow-step">
+          <div class="flow-step-title">Carbon analysis</div>
+          <ul class="flow-step-list">
+            <li>Embodied carbon</li>
+            <li>Per alternative</li>
+          </ul>
+        </div>
+
+        <div class="flow-arrow">&rarr;</div>
+
+        <div class="flow-step flow-step-final">
+          <div class="flow-step-title">Compare</div>
+          <ul class="flow-step-list">
+            <li>Geometry</li>
+            <li>Structure</li>
+            <li>Carbon</li>
+          </ul>
+        </div>
+      </div>
+
+      <figure class="fig-shot">
+        <img
+          src="../../images/redesignmate_floors_added.jpeg"
+          alt="Renovation scenario showing additional floors generated on top of the existing building">
+        <figcaption>
+          Additional floors generated as part of a renovation scenario, extending the existing building's
+          massing.
+        </figcaption>
+      </figure>
+
+      <figure class="fig-shot">
+        <img
+          src="../../images/redesignmate_structuralanalysis.jpg"
+          alt="Structural analysis of a renovation scenario, evaluating the existing building's capacity to support the proposed intervention">
+        <figcaption>
+          Structural evaluation of a renovation scenario against the existing building's load-bearing capacity.
+        </figcaption>
+      </figure>
+    </div>
+
+
+    <!-- PROCESS -->
+    <div class="fig-block">
+      <div class="fig-kicker">Process</div>
+
+      <div class="compare-grid">
+        <div class="compare-card">
+          <span class="compare-label">01 &mdash; Generate</span>
+          <p>A set of parameters is used to generate different renovation and extension scenarios from the existing building.</p>
+          <p>Because the geometry is parametric, different options can be produced from the same underlying model rather than created manually one by one.</p>
+        </div>
+        <div class="compare-card">
+          <span class="compare-label">02 &mdash; Evaluate</span>
+          <p>Each option can be checked against structural constraints and compared using fa&ccedil;ade, material and embodied-carbon information.</p>
+          <p>The analysis is linked directly to the generated geometry, so changes in the design can be reflected in the results.</p>
+        </div>
+        <div class="compare-card">
+          <span class="compare-label">03 &mdash; Compare</span>
+          <p>The results are shown through the web interface, making it easier to compare different scenarios in terms of geometry, structural feasibility and carbon impact.</p>
+        </div>
+      </div>
+
+      <p>
+        ReDesignMate uses adaptive reuse as a practical case for exploring how generation, analysis and comparison
+        can be connected in one interactive computational workflow.
+      </p>
+    </div>
+
+    <p class="project-links"><a href="https://github.com/JeroenJanssen-TT/designmate" target="_blank" rel="noopener">GitHub</a></p>
+
+  </div>
+</section>
+
+<footer class="wrap">
+  Carmen Rubio Garcia &middot; London, UK
+</footer>
+
+</body>
+</html>
