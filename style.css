@@ -114,8 +114,8 @@ h3, .about h3{
 .section-divider.section-divider--tight{ margin:0 0 38px; border-top-color:#a8a8a8; }
 .page-title h1{ font-size:20px; letter-spacing:0.3px; font-weight:bold; margin-bottom:16px; }
 .page-title p{ color:var(--body); max-width:760px; }
-.about-intro{ margin-bottom:12px; }
-.page-title .intro-lead{ color:var(--ink); font-size:15px; font-weight:normal; line-height:1.5; max-width:600px; }
+.page-title .about-intro{ margin-bottom:12px; color:var(--ink); }
+.page-title .intro-lead{ color:var(--ink); font-size:15px; font-weight:normal; line-height:1.5; max-width:760px; }
 .about-contact{ font-size:13px; color:var(--muted); margin-top:22px; }
 .about-contact a{ color:var(--ink); text-decoration:underline; }
 .project-subtitle{ color:var(--ink) !important; font-size:15px; font-weight:600; margin-top:8px; max-width:860px; }
@@ -156,6 +156,7 @@ h3, .about h3{
 .project-page figure{ margin:18px 0; max-width:700px; }
 .project-page figcaption{ font-size:12.5px; color:var(--muted); margin-top:6px; line-height:1.45; max-width:640px; }
 .project-page .pipeline-label + .taxonomy{ margin-top:0; margin-bottom:16px; }
+.tech-stack{ font-size:11.5px; color:var(--muted); margin-top:6px; letter-spacing:0.2px; }
 .project-page .fig-spaced{ margin:38px 0; }
 
 .feature-list{ list-style:none; margin:0 0 16px; padding:0; max-width:640px; }
